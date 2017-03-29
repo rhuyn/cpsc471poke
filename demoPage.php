@@ -82,10 +82,11 @@ Manmeet Dhaliwal
             //**********************************************************************
             //Format: ID, BadgeReq, PP, Effect, Damage, Type, NPCID, MapName
             $machineArr = array(
-                array("HM01", NULL, 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, NULL),
-                array(),
-                array(),
-                array()
+                array("HM01", NULL, 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, "S.S. Anne"),
+                array("HM02", NULL, 15, "Allow User to fly to any previously visited city outside of battle", 90, "Flying", NULL, "Route 16"),
+                array("HM03", NULL, 15, "Allow user to traverse water terrains", 90, "Water", NULL, NULL),
+                array("TM22", NULL, 10, NULL, 120, "Grass", NULL, NULL),
+                array("TM25", NULL, 10, NULL, 110, "Thunder", NULL, NULL),
             );
             //**********************************************************************
             //Server Info
