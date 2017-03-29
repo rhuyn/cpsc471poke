@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.17-log)
-# Date: 2017-03-24 22:49:16
+# Date: 2017-03-29 13:54:47
 # Generator: MySQL-Front 6.0  (Build 1.74)
 
 
@@ -31,10 +31,19 @@ CREATE TABLE `gym` (
 DROP TABLE IF EXISTS `maps`;
 CREATE TABLE `maps` (
   `Name` varchar(11) NOT NULL DEFAULT '',
-  `ConnectMapName` varchar(255) DEFAULT NULL,
+  `MapNorth` varchar(255) DEFAULT NULL,
+  `MapSouth` varchar(255) DEFAULT NULL,
+  `MapWest` varchar(255) DEFAULT NULL,
+  `MapEast` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Name`),
-  KEY `ConnectMapName` (`ConnectMapName`),
-  CONSTRAINT `ConnectMapName` FOREIGN KEY (`ConnectMapName`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `North` (`MapNorth`),
+  KEY `East` (`MapEast`),
+  KEY `West` (`MapWest`),
+  KEY `South` (`MapSouth`),
+  CONSTRAINT `East` FOREIGN KEY (`MapEast`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `North` FOREIGN KEY (`MapNorth`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `South` FOREIGN KEY (`MapSouth`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `West` FOREIGN KEY (`MapWest`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -70,20 +79,81 @@ CREATE TABLE `npcs` (
 
 DROP TABLE IF EXISTS `hm_tm`;
 CREATE TABLE `hm_tm` (
-  `IDNumber` int(11) NOT NULL AUTO_INCREMENT,
+  `IDName` varchar(11) NOT NULL DEFAULT '',
   `BadgeRequired` varchar(255) DEFAULT NULL,
   `PP` int(11) DEFAULT NULL,
   `Effect` varchar(255) DEFAULT NULL,
   `Damage` int(11) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
   `NPCID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IDNumber`),
+  `MapFound` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`IDName`),
   KEY `HMNPCID` (`NPCID`),
-  CONSTRAINT `HMNPCID` FOREIGN KEY (`NPCID`) REFERENCES `npcs` (`NPCID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `MapFound` (`MapFound`),
+  CONSTRAINT `HMNPCID` FOREIGN KEY (`NPCID`) REFERENCES `npcs` (`NPCID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `hm_tm_ibfk_1` FOREIGN KEY (`MapFound`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "hm_tm"
+#
+
+
+#
+# Structure for table "items"
+#
+
+DROP TABLE IF EXISTS `items`;
+CREATE TABLE `items` (
+  `ItemID` int(11) NOT NULL DEFAULT '0',
+  `Name` varchar(255) DEFAULT NULL,
+  `Effect` varchar(255) DEFAULT NULL,
+  `Category` varchar(255) DEFAULT NULL,
+  `NPCID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ItemID`),
+  KEY `itemNPCID` (`NPCID`),
+  CONSTRAINT `itemNPCID` FOREIGN KEY (`NPCID`) REFERENCES `npcs` (`NPCID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "items"
+#
+
+
+#
+# Structure for table "itemmapfound"
+#
+
+DROP TABLE IF EXISTS `itemmapfound`;
+CREATE TABLE `itemmapfound` (
+  `ItemID` int(11) DEFAULT NULL,
+  `MapName` varchar(255) DEFAULT NULL,
+  KEY `ItemID` (`ItemID`),
+  KEY `MapName` (`MapName`),
+  CONSTRAINT `itemmapfound_ibfk_1` FOREIGN KEY (`ItemID`) REFERENCES `items` (`ItemID`),
+  CONSTRAINT `itemmapfound_ibfk_2` FOREIGN KEY (`MapName`) REFERENCES `maps` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "itemmapfound"
+#
+
+
+#
+# Structure for table "trainer"
+#
+
+DROP TABLE IF EXISTS `trainer`;
+CREATE TABLE `trainer` (
+  `TrainerID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) DEFAULT NULL,
+  `Age` int(11) DEFAULT NULL,
+  `StartingTown` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`TrainerID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "trainer"
 #
 
 
@@ -95,9 +165,12 @@ DROP TABLE IF EXISTS `pokemon`;
 CREATE TABLE `pokemon` (
   `PokemonID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL DEFAULT 'Unknown',
+  `TrainerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`PokemonID`),
-  UNIQUE KEY `Name` (`Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `Name` (`Name`),
+  KEY `pTrainerID` (`TrainerID`),
+  CONSTRAINT `pTrainerID` FOREIGN KEY (`TrainerID`) REFERENCES `trainer` (`TrainerID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "pokemon"
@@ -105,21 +178,42 @@ CREATE TABLE `pokemon` (
 
 
 #
-# Structure for table "pmapfound"
+# Structure for table "stats"
 #
 
-DROP TABLE IF EXISTS `pmapfound`;
-CREATE TABLE `pmapfound` (
+DROP TABLE IF EXISTS `stats`;
+CREATE TABLE `stats` (
   `pID` int(11) DEFAULT NULL,
-  `MapName` varchar(255) DEFAULT NULL,
-  KEY `pID` (`pID`),
-  KEY `MapName` (`MapName`),
-  CONSTRAINT `pmapfound_ibfk_1` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pmapfound_ibfk_2` FOREIGN KEY (`MapName`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
+  `HP` int(11) NOT NULL DEFAULT '0',
+  `Attack` int(11) NOT NULL DEFAULT '0',
+  `Defence` int(11) NOT NULL DEFAULT '0',
+  `SpAtk` int(11) NOT NULL DEFAULT '0',
+  `SpDef` int(11) NOT NULL DEFAULT '0',
+  `Speed` int(11) NOT NULL DEFAULT '0',
+  UNIQUE KEY `statspID` (`pID`),
+  CONSTRAINT `pStatsID` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
-# Data for table "pmapfound"
+# Data for table "stats"
+#
+
+
+#
+# Structure for table "ptypes"
+#
+
+DROP TABLE IF EXISTS `ptypes`;
+CREATE TABLE `ptypes` (
+  `pID` int(11) DEFAULT NULL,
+  `FirstType` varchar(255) DEFAULT NULL,
+  `SecondType` varchar(255) DEFAULT NULL,
+  KEY `pID` (`pID`),
+  CONSTRAINT `pID` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "ptypes"
 #
 
 
@@ -130,11 +224,11 @@ CREATE TABLE `pmapfound` (
 DROP TABLE IF EXISTS `canlearn`;
 CREATE TABLE `canlearn` (
   `PokemonID` int(11) DEFAULT NULL,
-  `HMID` int(11) DEFAULT NULL,
+  `HMID` varchar(11) DEFAULT NULL,
   KEY `CanLearnPID` (`PokemonID`),
-  KEY `CanLearnHMID` (`HMID`),
-  CONSTRAINT `CanLearnHMID` FOREIGN KEY (`HMID`) REFERENCES `hm_tm` (`IDNumber`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `CanLearnPID` FOREIGN KEY (`PokemonID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `learnHM` (`HMID`),
+  CONSTRAINT `CanLearnPID` FOREIGN KEY (`PokemonID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `learnHM` FOREIGN KEY (`HMID`) REFERENCES `hm_tm` (`IDName`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -162,105 +256,20 @@ CREATE TABLE `moves` (
 
 
 #
-# Structure for table "ptypes"
+# Structure for table "pmapfound"
 #
 
-DROP TABLE IF EXISTS `ptypes`;
-CREATE TABLE `ptypes` (
+DROP TABLE IF EXISTS `pmapfound`;
+CREATE TABLE `pmapfound` (
   `pID` int(11) DEFAULT NULL,
-  `FirstType` varchar(255) DEFAULT NULL,
-  `SecondType` varchar(255) DEFAULT NULL,
-  KEY `pID` (`pID`),
-  CONSTRAINT `pID` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "ptypes"
-#
-
-
-#
-# Structure for table "stats"
-#
-
-DROP TABLE IF EXISTS `stats`;
-CREATE TABLE `stats` (
-  `pID` int(11) DEFAULT NULL,
-  `HP` int(11) NOT NULL DEFAULT '0',
-  `Attack` int(11) NOT NULL DEFAULT '0',
-  `Defence` int(11) NOT NULL DEFAULT '0',
-  `SpAtk` int(11) NOT NULL DEFAULT '0',
-  `SpDef` int(11) NOT NULL DEFAULT '0',
-  `Speed` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `statspID` (`pID`),
-  CONSTRAINT `pStatsID` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "stats"
-#
-
-
-#
-# Structure for table "trainer"
-#
-
-DROP TABLE IF EXISTS `trainer`;
-CREATE TABLE `trainer` (
-  `TrainerID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Age` int(11) DEFAULT NULL,
-  `StartingTown` varchar(255) DEFAULT NULL,
-  `pID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`TrainerID`),
-  KEY `trainerPID` (`pID`),
-  CONSTRAINT `trainerPID` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
-#
-# Data for table "trainer"
-#
-
-
-#
-# Structure for table "items"
-#
-
-DROP TABLE IF EXISTS `items`;
-CREATE TABLE `items` (
-  `ItemID` int(11) NOT NULL DEFAULT '0',
-  `Name` varchar(255) DEFAULT NULL,
-  `Effect` varchar(255) DEFAULT NULL,
-  `Category` varchar(255) DEFAULT NULL,
-  `NPCID` int(11) DEFAULT NULL,
-  `TrainerID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ItemID`),
-  KEY `itemNPCID` (`NPCID`),
-  KEY `itemTrainerID` (`TrainerID`),
-  CONSTRAINT `itemNPCID` FOREIGN KEY (`NPCID`) REFERENCES `npcs` (`NPCID`),
-  CONSTRAINT `itemTrainerID` FOREIGN KEY (`TrainerID`) REFERENCES `trainer` (`TrainerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "items"
-#
-
-
-#
-# Structure for table "itemmapfound"
-#
-
-DROP TABLE IF EXISTS `itemmapfound`;
-CREATE TABLE `itemmapfound` (
-  `ItemID` int(11) DEFAULT NULL,
   `MapName` varchar(255) DEFAULT NULL,
-  KEY `ItemID` (`ItemID`),
+  KEY `pID` (`pID`),
   KEY `MapName` (`MapName`),
-  CONSTRAINT `itemmapfound_ibfk_1` FOREIGN KEY (`ItemID`) REFERENCES `items` (`ItemID`),
-  CONSTRAINT `itemmapfound_ibfk_2` FOREIGN KEY (`MapName`) REFERENCES `maps` (`Name`)
+  CONSTRAINT `pmapfound_ibfk_1` FOREIGN KEY (`pID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pmapfound_ibfk_2` FOREIGN KEY (`MapName`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
-# Data for table "itemmapfound"
+# Data for table "pmapfound"
 #
 
