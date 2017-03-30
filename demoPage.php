@@ -89,6 +89,19 @@ Manmeet Dhaliwal
                 array("TM25", NULL, 10, NULL, 110, "Thunder", NULL, NULL),
             );
             //**********************************************************************
+			
+			// Moves
+            //**********************************************************************
+			//Format: pMoveID, Level, Move
+			$moveArr = array (
+				array(1, 1, "Tackle");
+				array(1, 3, "Growl");
+				array(4, 1, "Scratch");
+				array(4, 3, "Growl");
+				array(7, 1, "Tackle");
+				array(7, 3, "Tail Whip");
+			);
+			
             //Server Info
             //**********************************************************************
             $servername = "localhost";          //should be same for you
@@ -258,6 +271,13 @@ Manmeet Dhaliwal
                 }
              }
              //***************************************************************************************************************************
+			 
+			 //HMTM QUERIES
+             //***************************************************************************************************************************
+			 for($i = 0; $i < sizeof($machineArr); $i++){
+				 
+			 }
+
             $conn-> close();            //close the connection to database
         ?>
     </body>
