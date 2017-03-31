@@ -15,7 +15,8 @@ Manmeet Dhaliwal
             //**********************************************************************
             //Format: ID, Name, Age, Town, PokemonID
             $trainerArr =array( 
-                    array(1, "Red", 11, "Pallet Town", ),
+                    array(0, "No Trainer", 0, "No Location"),
+                    array(1, "Red", 11, "Pallet Town" ),
                     array(2, "Ethan", 11, "New Bark Town"),
                     array(3, "Brendan", 12, "Littleroot Town"),
                     array(4, "Lucas", 13, "Twinleaf Town"),
@@ -38,7 +39,8 @@ Manmeet Dhaliwal
                 array(6, "Charizard", 78, 84, 78, 109, 85, 100, "Fire", "Flying", 0),
                 array(7, "Squirtle", 44, 48, 65, 50, 64, 43, "Water", "N/A", 1),
                 array(8, "Wartortle", 59, 63, 80, 65, 80, 58, "Water", "N/A", 0),
-                array(9, "Blastoise", 79, 83, 100, 85, 105, 78, "Water", "N/A", 0)
+                array(9, "Blastoise", 79, 83, 100, 85, 105, 78, "Water", "N/A", 0),
+                array(10,"Caterpie", 45, 30, 35, 20, 20, 45, "Bug", "N/A", 0)
                 );
             //**********************************************************************
             
@@ -52,7 +54,9 @@ Manmeet Dhaliwal
                 array(4, "Champion", "Cynthia", "Pokemon League", 6, "Pokemon League"),
                 array(5, "PokeMart", "Clerk", "Viridian City PokeMart", 0, "Viridian City"),
                 array(6, "Bicycle Shop", "Clerk", "Cerulean City Bicycle Shop", 0, "Cerulean City"),
-                array(7, "Ship Captain", "Bob", "S.S. Anne", 0, "Vermilion City")
+                array(7, "Ship Captain", "Bob", "S.S. Anne", 0, "Vermilion City"),
+                array(8, "Gym Leader", "Misty", "Cerulean Gym", 2, "Cerulean City"),
+                array(9, "Silph Co", "President", "Silph Co Building", 0, "Saffron City")
             );
             //**********************************************************************
             
@@ -60,11 +64,19 @@ Manmeet Dhaliwal
             //**********************************************************************
             //Format: name, north, south, west, east
             $mapArr = array(
-                array("Pallet Town", "Route 1", "Route 21", NULL, NULL),
-                array("Route 1", "Viridian City", "PalletTown", NULL, NULL),
-                array("Pewter City", NULL, "Route 2", "Route 3"),
-                array("Ceruleon City", "Route 24", "Route 5", "Route 4", "Route 9"),
-                array("S.S. Anne", "Vermilion City", NULL, NULL, NULL)
+                array("Pallet Town"),
+                array("Route 1"),
+                array("Pewter City"),
+                array("Cerulean City"),
+                array("S.S. Anne"),
+                array("Saffron City"),
+                array("Silph Co"),
+                array("Route 30"),
+                array("Viridian City"),
+                array("Pokemon League"),
+                array("Vermilion City"),
+                array("Route 16"),
+                array("Route 2")
             );
             //**********************************************************************
             
@@ -74,7 +86,8 @@ Manmeet Dhaliwal
             $itemArr = array(
                 array(1, "Poke Ball", "Allows the player to catch wild Pokemon", "Item", 5),
                 array(2, "Potion", "Heals a Pokemon by 20 HP", "Medicine", 5),
-                array(3, "Bicycle", "Allows for faster travel than walking or running. Can be used to ride on Cycling Roads", "Key Item", 6)
+                array(3, "Bicycle", "Allows for faster travel than walking or running. Can be used to ride on Cycling Roads", "Key Item", 6),
+                array(4, "Master Ball", "A ball that captures any wild Pokemon without fail.", "Item", 9)
             );
             //**********************************************************************
             
@@ -82,12 +95,57 @@ Manmeet Dhaliwal
             //**********************************************************************
             //Format: ID, BadgeReq, PP, Effect, Damage, Type, NPCID, MapName
             $machineArr = array(
-                array("HM01", NULL, 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, NULL),
-                array(),
-                array(),
-                array()
+                array("HM01", NULL, 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, "S.S. Anne"),
+                array("HM02", NULL, 15, "Allow User to fly to any previously visited city outside of battle", 90, "Flying", NULL, "Route 16"),
+                array("HM03", NULL, 15, "Allow user to traverse water terrains", 90, "Water", NULL, NULL),
+                array("TM22", NULL, 10, NULL, 120, "Grass", NULL, NULL),
+                array("TM25", NULL, 10, NULL, 110, "Thunder", NULL, NULL),
             );
             //**********************************************************************
+            
+            //CanLearn
+            //**********************************************************************
+            //Format: pID, HMID
+            $learnArr = array(
+                array(1, "HM01"),
+                array(2, "HM01"),
+                array(3, "HM01"),
+                array(7,"HM03"),
+                array(8, "HM03"),
+                array(9, "HM03")
+            );
+            //**********************************************************************
+            
+            //gym
+            //**********************************************************************
+            //Format: Name, Location, NPCID
+            $gymArr = array(
+                array("Pewter Gym", "Pewter City", 3),
+                array("Cerulean Gym", "Cerulean City", 8)
+            );
+            //**********************************************************************
+            
+            //imap
+            //**********************************************************************
+            //Format: ItemID, MapName
+            $itemmapArr = array(
+                array(1, "Route 2"),
+                array(2, "Route 2"),
+                array(4, "Silph Co")
+            );
+            //**********************************************************************
+            
+            //pmap
+            //**********************************************************************
+            //Format: pID, Location
+            $pmapArr = array(
+                array(1, "Pallet Town"),
+                array(2, NULL),
+                array(10, "Route 2")
+            );
+            //**********************************************************************
+
+            
             //Server Info
             //**********************************************************************
             $servername = "localhost";          //should be same for you
@@ -172,6 +230,7 @@ Manmeet Dhaliwal
                 }
                 else{
                     echo "Query did not execute pokemon<br>";
+                    echo("Error description:" . mysqli_errno($conn));
                 }
                 
                 //Stats table
@@ -182,6 +241,7 @@ Manmeet Dhaliwal
                 }
                 else{
                     echo "Query did not execute stats<br>";
+                    echo("Error description:" . mysqli_errno($conn));
                 }
                 
                 //Ptypes table
@@ -192,11 +252,30 @@ Manmeet Dhaliwal
                 }
                 else{
                     echo "Query did not execute ptype<br>";
+                    echo("Error description:" . mysqli_errno($conn));
+                    
                 }
                 
             }
             //***************************************************************************************************************************
-            
+          // 
+             //MAPS QUERIES
+             //***************************************************************************************************************************
+             for($i = 0; $i < sizeof($mapArr); $i++){
+                $fieldval1 = $mapArr[$i][0]; //Name
+                
+                $sql = "INSERT INTO maps (Name) VALUE ('".$fieldval1."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed maps<br>";
+                }
+                else{
+                    echo "Query did not execute maps<br>";
+                                        echo("Error description:" . mysqli_errno($conn));
+                }
+             }
+             //***************************************************************************************************************************
+  
             //NPC QUERIES
             //***************************************************************************************************************************
              for($i = 0; $i < sizeof($npcArr); $i++){
@@ -207,36 +286,19 @@ Manmeet Dhaliwal
                 $fieldval5 = $npcArr[$i][4]; //NumPokemon
                 $fieldval6 = $npcArr[$i][5]; //MapName
                 
-                $sql = "INSERT INTO npcs (NPCID, Title, Name, Location, NumPokemon, MapName) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4.", ".$fieldval5.", '".$fieldval6."')";
+                $sql = "INSERT INTO npcs (NPCID, Title, Name, Location, NumPokemon, MapName) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', ".$fieldval5.", '".$fieldval6."')";
                 echo "<br><br> Inserting into db: ";
                 if($conn->query($sql)==TRUE){       //try executing the query 
                     echo "Query executed npcs<br>";
                 }
                 else{
                     echo "Query did not execute npcs<br>";
+                    echo("Error description:" . mysqli_errno($conn));
                 }
              }
             //***************************************************************************************************************************
              
-             //MAPS QUERIES
-             //***************************************************************************************************************************
-             for($i = 0; $i < sizeof($mapArr); $i++){
-                $fieldval1 = $npcArr[$i][0]; //Name
-                $fieldval2 = $npcArr[$i][1]; //North
-                $fieldval3 = $npcArr[$i][2]; //South
-                $fieldval4 = $mapArr[$i][3]; //West
-                $fieldval5 = $mapArr[$i][4]; //East
-                
-                $sql = "INSERT INTO maps (Name, MapNorth, MapSouth, MapWest, MapEast) VALUE ('".$fieldval1."', '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4.", '".$fieldval5."')";
-                echo "<br><br> Inserting into db: ";
-                if($conn->query($sql)==TRUE){       //try executing the query 
-                    echo "Query executed maps<br>";
-                }
-                else{
-                    echo "Query did not execute maps<br>";
-                }
-             }
-             //***************************************************************************************************************************
+
              
              //ITEMS QUERIES
              //***************************************************************************************************************************
@@ -247,17 +309,89 @@ Manmeet Dhaliwal
                 $fieldval4 = $itemArr[$i][3]; //Category
                 $fieldval5 = $itemArr[$i][4]; //NPCID
                 
-                $sql = "INSERT INTO maps (ItemID, Name, Effect, Category, NPCID) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4.", ".$fieldval5.")";
+                $sql = "INSERT INTO items (ItemID, Name, Effect, Category, NPCID) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', ".$fieldval5.")";
                 echo "<br><br> Inserting into db: ";
                 if($conn->query($sql)==TRUE){       //try executing the query 
-                    echo "Query executed maps<br>";
+                    echo "Query executed items<br>";
                 }
                 else{
-                    echo "Query did not execute maps<br>";
+                    echo "Query did not execute items<br>";
+                    echo("Error description:" . mysqli_errno($conn));
                 }
              }
              //***************************************************************************************************************************
-            $conn-> close();            //close the connection to database
+             
+             //CANLEARN QUERIES
+             //***************************************************************************************************************************
+             for($i = 0; $i < sizeof($learnArr); $i++){
+                $fieldval1 = $learnArr[$i][0]; //pID
+                $fieldval2 = $learnArr[$i][1]; //HMID 
+                
+                $sql = "INSERT INTO canlearn (PokemonID, HMID) VALUE (".$fieldval1.", '".$fieldval2."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed canlearn<br>";
+                }
+                else{
+                    echo "Query did not execute canlearn<br>";
+                }
+             }
+             //***************************************************************************************************************************
+             
+             //GYM QUERIES
+             //***************************************************************************************************************************
+             for($i = 0; $i < sizeof($gymArr); $i++){
+                $fieldval1 = $gymArr[$i][0]; //Name
+                $fieldval2 = $gymArr[$i][1]; //Location
+                $fieldval3 = $gymArr[$i][2]; //NPCID
+                $sql = "INSERT INTO gym (Name, Location, GymLeaderID) VALUE ('".$fieldval1."', '".$fieldval2."', ".$fieldval3.")";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed gym<br>";
+                }
+                else{
+                    echo "Query did not execute gym<br>";
+                }
+             }
+             //***************************************************************************************************************************
+             
+             //ITEMMAPFOUND QUERIES
+             //***************************************************************************************************************************
+             for($i = 0; $i < sizeof($itemmapArr); $i++){
+                $fieldval1 = $itemmapArr[$i][0]; //itemID
+                $fieldval2 = $itemmapArr[$i][1]; //Location
+                
+                $sql = "INSERT INTO itemmapfound (ItemID, MapName) VALUE (".$fieldval1.", '".$fieldval2."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed itemFound<br>";
+                }
+                else{
+                    echo "Query did not execute itemFound<br>";
+                }
+             }
+             //***************************************************************************************************************************
+             
+             //PMAPFOUND QUERIES
+             //***************************************************************************************************************************
+             for($i = 0; $i < sizeof($pmapArr); $i++){
+                $fieldval1 = $pmapArr[$i][0]; //pID
+                $fieldval2 = $pmapArr[$i][1]; //Location
+                
+                $sql = "INSERT INTO pmapfound (pID, MapName) VALUE (".$fieldval1.", '".$fieldval2."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed pFound<br>";
+                }
+                else{
+                    echo "Query did not execute pFound<br>";
+                    echo("Error description:" . mysqli_errno($conn));
+                }
+             }
+             //***************************************************************************************************************************
+             
+                          
+             $conn-> close();            //close the connection to database
         ?>
     </body>
 </html>
