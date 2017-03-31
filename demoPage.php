@@ -48,6 +48,7 @@ Manmeet Dhaliwal
             //**********************************************************************
             //Format: ID, title, name, location, numb of pokemon, map
             $npcArr = array(
+                array(0, NULL, NULL, NULL, 0, "Unknown"),
                 array(1, "Professor", "Oak", "Pallet Town Research Lab", 0, "Pallet Town"),
                 array(2, "Youngster", "Joey", "Route 30", 1, "Route 30"),
                 array(3, "Gym Leader", "Brock", "Pewter Gym", 2, "Pewter City"),
@@ -76,7 +77,8 @@ Manmeet Dhaliwal
                 array("Pokemon League"),
                 array("Vermilion City"),
                 array("Route 16"),
-                array("Route 2")
+                array("Route 2"),
+                array("Unknown")
             );
             //**********************************************************************
             
@@ -96,10 +98,10 @@ Manmeet Dhaliwal
             //Format: ID, BadgeReq, PP, Effect, Damage, Type, NPCID, MapName
             $machineArr = array(
                 array("HM01", NULL, 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, "S.S. Anne"),
-                array("HM02", NULL, 15, "Allow User to fly to any previously visited city outside of battle", 90, "Flying", NULL, "Route 16"),
-                array("HM03", NULL, 15, "Allow user to traverse water terrains", 90, "Water", NULL, NULL),
-                array("TM22", NULL, 10, NULL, 120, "Grass", NULL, NULL),
-                array("TM25", NULL, 10, NULL, 110, "Thunder", NULL, NULL),
+                array("HM02", NULL, 15, "Allow User to fly to any previously visited city outside of battle", 90, "Flying", 0, "Route 16"),
+                array("HM03", NULL, 15, "Allow user to traverse water terrains", 90, "Water", 0, "Unknown"),
+                array("TM22", NULL, 10, NULL, 120, "Grass", 0, "Unknown"),
+                array("TM25", NULL, 10, NULL, 110, "Thunder", 0, "Unknown")
             );
             //**********************************************************************
             
@@ -144,8 +146,20 @@ Manmeet Dhaliwal
                 array(10, "Route 2")
             );
             //**********************************************************************
-
-            
+			
+            // Moves
+            //**********************************************************************
+            //Format: pMoveID, Level, Move
+            $moveArr = array (
+                array(1, 1, "Tackle"),
+                array(1, 3, "Growl"),
+                array(4, 1, "Scratch"),
+                array(4, 3, "Growl"),
+                array(7, 1, "Tackle"),
+                array(7, 3, "Tail Whip")
+            );
+            //**********************************************************************
+			
             //Server Info
             //**********************************************************************
             $servername = "localhost";          //should be same for you
@@ -271,7 +285,7 @@ Manmeet Dhaliwal
                 }
                 else{
                     echo "Query did not execute maps<br>";
-                                        echo("Error description:" . mysqli_errno($conn));
+
                 }
              }
              //***************************************************************************************************************************
@@ -285,6 +299,8 @@ Manmeet Dhaliwal
                 $fieldval4 = $npcArr[$i][3]; //Location
                 $fieldval5 = $npcArr[$i][4]; //NumPokemon
                 $fieldval6 = $npcArr[$i][5]; //MapName
+                
+                echo $fieldval2;
                 
                 $sql = "INSERT INTO npcs (NPCID, Title, Name, Location, NumPokemon, MapName) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', ".$fieldval5.", '".$fieldval6."')";
                 echo "<br><br> Inserting into db: ";
@@ -321,22 +337,6 @@ Manmeet Dhaliwal
              }
              //***************************************************************************************************************************
              
-             //CANLEARN QUERIES
-             //***************************************************************************************************************************
-             for($i = 0; $i < sizeof($learnArr); $i++){
-                $fieldval1 = $learnArr[$i][0]; //pID
-                $fieldval2 = $learnArr[$i][1]; //HMID 
-                
-                $sql = "INSERT INTO canlearn (PokemonID, HMID) VALUE (".$fieldval1.", '".$fieldval2."')";
-                echo "<br><br> Inserting into db: ";
-                if($conn->query($sql)==TRUE){       //try executing the query 
-                    echo "Query executed canlearn<br>";
-                }
-                else{
-                    echo "Query did not execute canlearn<br>";
-                }
-             }
-             //***************************************************************************************************************************
              
              //GYM QUERIES
              //***************************************************************************************************************************
@@ -389,9 +389,66 @@ Manmeet Dhaliwal
                 }
              }
              //***************************************************************************************************************************
-             
-                          
-             $conn-> close();            //close the connection to database
+			 
+            //HMTM QUERIES
+            //***************************************************************************************************************************
+            for($i = 0; $i < sizeof($machineArr); $i++){
+                $fieldval1 = $machineArr[$i][0]; //ID
+                $fieldval2 = $machineArr[$i][1]; //BadgeReq
+                $fieldval3 = $machineArr[$i][2]; //PP
+                $fieldval4 = $machineArr[$i][3]; //Effect
+                $fieldval5 = $machineArr[$i][4]; //Damage
+                $fieldval6 = $machineArr[$i][5]; //Type
+                $fieldval7 = $machineArr[$i][6]; //NPCID
+                $fieldval8 = $machineArr[$i][7]; //MapName
+
+                $sql = "INSERT INTO hmtm (IDName, BadgeRequired, PP, Effect, Damage, Type, NPCID, MapFound) VALUE ('".$fieldval1."', '".$fieldval2."', ".$fieldval3.", '".$fieldval4."', ".$fieldval5.", '".$fieldval6."', ".$fieldval7.", '".$fieldval8."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed hmtm<br>";
+                }
+                else{
+                    echo "Query did not execute hmtm<br>";
+                    echo("Error description:" . mysqli_errno($conn));
+                }
+            }
+             //***************************************************************************************************************************
+			 
+            //MOVE QUERIES
+            //***************************************************************************************************************************
+
+            for($i = 0; $i < sizeof($machineArr); $i++){
+                $fieldval1 = $moveArr[$i][0]; //pMoveID
+                $fieldval2 = $moveArr[$i][1]; //Level
+                $fieldval3 = $moveArr[$i][2]; //Move
+
+                $sql = "INSERT INTO moves (pID, Level, Move) VALUE (".$fieldval1.", ".$fieldval2.", '".$fieldval3."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                echo "Query executed moves<br>";
+                }
+                else{
+                    echo "Query did not execute moves<br>";
+                }
+            }
+             //***************************************************************************************************************************
+             //CANLEARN QUERIES
+             //***************************************************************************************************************************
+             for($i = 0; $i < sizeof($learnArr); $i++){
+                $fieldval1 = $learnArr[$i][0]; //pID
+                $fieldval2 = $learnArr[$i][1]; //HMID 
+                
+                $sql = "INSERT INTO canlearn (PokemonID, HMID) VALUE (".$fieldval1.", '".$fieldval2."')";
+                echo "<br><br> Inserting into db: ";
+                if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed canlearn<br>";
+                }
+                else{
+                    echo "Query did not execute canlearn<br>";
+                }
+             }
+             //***************************************************************************************************************************
+            $conn-> close();            //close the connection to database
         ?>
     </body>
 </html>
