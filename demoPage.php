@@ -261,23 +261,58 @@ Manmeet Dhaliwal
                 $fieldval4 = $itemArr[$i][3]; //Category
                 $fieldval5 = $itemArr[$i][4]; //NPCID
                 
-                $sql = "INSERT INTO maps (ItemID, Name, Effect, Category, NPCID) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4.", ".$fieldval5.")";
+                $sql = "INSERT INTO maps (ItemID, Name, Effect, Category, NPCID) VALUE ('".$fieldval1."', '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', '".$fieldval5."')";
                 echo "<br><br> Inserting into db: ";
                 if($conn->query($sql)==TRUE){       //try executing the query 
-                    echo "Query executed maps<br>";
+                    echo "Query executed items<br>";
                 }
                 else{
-                    echo "Query did not execute maps<br>";
+                    echo "Query did not execute items<br>";
                 }
              }
              //***************************************************************************************************************************
 			 
-			 //HMTM QUERIES
-             //***************************************************************************************************************************
-			 for($i = 0; $i < sizeof($machineArr); $i++){
-				 
+			//HMTM QUERIES
+            //***************************************************************************************************************************
+			//Format: ID, BadgeReq, PP, Effect, Damage, Type, NPCID, MapName
+			for($i = 0; $i < sizeof($machineArr); $i++){
+				$fieldval1 = $machineArr[$i][0]; //ID
+				$fieldval2 = $machineArr[$i][1]; //BadgeReq
+				$fieldval3 = $machineArr[$i][2]; //PP
+				$fieldval4 = $machineArr[$i][3]; //Effect
+				$fieldval5 = $machineArr[$i][4]; //Damage
+				$fieldval6 = $machineArr[$i][5]; //Type
+				$fieldval7 = $machineArr[$i][6]; //NPCID
+				$fieldval8 = $machineArr[$i][7]; //MapName
+				
+				$sql = "INSERT INTO hm_tm (ID, BadgeReq, PP, Effect, Damage, Type, NPCID, MapName) VALUE ('".$fieldval1."', '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', '".$fieldval5."', '".$fieldval6."', '".$fieldval7."', '".$fieldval8."')";
+				echo "<br><br> Inserting into db: ";
+				if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed hm_tm<br>";
+                }
+                else{
+                    echo "Query did not execute hm_tm<br>";
+                }
 			 }
-
+			 
+			 
+			//MOVE QUERIES
+            //***************************************************************************************************************************
+			//Format: pMoveID, Level, Move
+			for($i = 0; $i < sizeof($machineArr); $i++){
+				$fieldval1 = $machineArr[$i][0]; //pMoveID
+				$fieldval2 = $machineArr[$i][1]; //Level
+				$fieldval3 = $machineArr[$i][2]; //Move
+				
+				$sql = "INSERT INTO moves (pMoveID, Level, Move) VALUE ('".$fieldval1."', '".$fieldvar2."', '".$fieldvar3."')";
+				echo "<br><br> Inserting into db: ";
+				if($conn->query($sql)==TRUE){       //try executing the query 
+                    echo "Query executed moves<br>";
+                }
+                else{
+                    echo "Query did not execute moves<br>";
+                }
+			 }
             $conn-> close();            //close the connection to database
         ?>
     </body>
