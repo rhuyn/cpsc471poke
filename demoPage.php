@@ -302,7 +302,7 @@ Manmeet Dhaliwal
                 
                 echo $fieldval2;
                 
-                $sql = "INSERT INTO npcs (NPCID, Title, Name, Location, NumPokemon, MapName) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', ".$fieldval5.", '".$fieldval6."')";
+                $sql = "INSERT INTO npcs (NPCID, Title, Name, Location, NumPokemon, MapName) VALUE (".$fieldval1.", '".$fieldval2."', '".$fieldval3."', '".$fieldval4."', ".$fieldval5.", '".$fieldval6."')";
                 echo "<br><br> Inserting into db: ";
                 if($conn->query($sql)==TRUE){       //try executing the query 
                     echo "Query executed npcs<br>";
@@ -325,7 +325,7 @@ Manmeet Dhaliwal
                 $fieldval4 = $itemArr[$i][3]; //Category
                 $fieldval5 = $itemArr[$i][4]; //NPCID
                 
-                $sql = "INSERT INTO items (ItemID, Name, Effect, Category, NPCID) VALUE (".$fieldval1.", '".$fieldvar2."', '".$fieldvar3."', '".$fieldval4."', ".$fieldval5.")";
+                $sql = "INSERT INTO items (ItemID, Name, Effect, Category, NPCID) VALUE (".$fieldval1.", '".$fieldval2."', '".$fieldval3."', '".$fieldval4."', ".$fieldval5.")";
                 echo "<br><br> Inserting into db: ";
                 if($conn->query($sql)==TRUE){       //try executing the query 
                     echo "Query executed items<br>";
