@@ -142,7 +142,6 @@ Manmeet Dhaliwal
             //Format: pID, Location
             $pmapArr = array(
                 array(1, "Pallet Town"),
-                array(2, NULL),
                 array(10, "Route 2")
             );
             //**********************************************************************
@@ -153,10 +152,24 @@ Manmeet Dhaliwal
             $moveArr = array (
                 array(1, 1, "Tackle"),
                 array(1, 3, "Growl"),
+                array(2, 1, "Tackle"),
+                array(2, 3, "Growl"),
+                array(3, 1, "Tackle"),
+                array(3, 3, "Growl"),
                 array(4, 1, "Scratch"),
                 array(4, 3, "Growl"),
+                array(5, 1, "Scratch"),
+                array(5, 3, "Growl"),
+                array(6, 1, "Scratch"),
+                array(6, 3, "Growl"),
                 array(7, 1, "Tackle"),
-                array(7, 3, "Tail Whip")
+                array(7, 3, "Tail Whip"),
+                array(8, 1, "Tackle"),
+                array(8, 3, "Tail Whip"),
+                array(9, 1, "Tackle"),
+                array(9, 3, "Tail Whip"),
+                array(10, 1, "Tackle"),
+                array(10, 3, "String Shot")
             );
             //**********************************************************************
 			
@@ -417,7 +430,7 @@ Manmeet Dhaliwal
             //MOVE QUERIES
             //***************************************************************************************************************************
 
-            for($i = 0; $i < sizeof($machineArr); $i++){
+            for($i = 0; $i < sizeof($moveArr); $i++){
                 $fieldval1 = $moveArr[$i][0]; //pMoveID
                 $fieldval2 = $moveArr[$i][1]; //Level
                 $fieldval3 = $moveArr[$i][2]; //Move

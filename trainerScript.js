@@ -7,13 +7,13 @@ function createTrainers(name, age, startingLoc)
 {
     var loc = document.getElementById("trainerEle");
     var newDiv = document.createElement("DIV");
-    newDiv.className = "trainerDiv";
+    newDiv.className = "generalDiv";
     var imgDiv = document.createElement("DIV");
-    imgDiv.className = "trainerImgDiv";
+    imgDiv.className = "generalImgDiv";
     var infoDiv = document.createElement("DIV");
-    infoDiv.className = "trainerInfo";
+    infoDiv.className = "generalInfo";
     var newImg = document.createElement("IMG");
-    newImg.className = "trainerImg";
+    newImg.className = "generalImg";
     newImg.src = name + ".png";
     imgDiv.appendChild(newImg);
 

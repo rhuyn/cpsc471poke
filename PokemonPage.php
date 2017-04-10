@@ -7,9 +7,10 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Trainer</title>
-        <link rel="stylesheet" type="text/css" href="generalStyle.css">
-        <script src="trainerScript.js"></script>
+        <title>Pokemon</title>
+        <link rel="stylesheet" type="text/css" href="generalStyle.css"/>
+        <link rel="stylesheet" type="text/css" href="pokemonStyle.css"/>
+        <script src="pokemonScript.js"></script>
     </head>
     <body Style="background-image: url('pokeballBK.png'); opacity: 30%;">
         <?php
@@ -35,10 +36,10 @@ and open the template in the editor.
                 <table width="100%" style="border: 1px solid black; table-layout: fixed;">
                     <tr>
                         <th style="border: 1px solid black;">
-                            <a href="TrainerPage.php" style="color: white;">Trainers</a>
+                            <a href="TrainerPage.php">Trainers</a>
                         </th>
                         <th style="border: 1px solid black;">
-                            <a href="PokemonPage.php">Pokemons</a>
+                            <a href="PokemonPage.php" style="color: white;">Pokemons</a>
                         </th>
                         <th style="border: 1px solid black;">
                             <a href="HMPage.php">HMs & TMs</a>
@@ -59,25 +60,68 @@ and open the template in the editor.
                 </table>
             </div>
         </div>
-        <div id="trainerEle">
+        <div id="pokeEle">
             <?php             
-            $sql = "SELECT Name, Age, StartingTown FROM trainer WHERE TrainerID > 0";
+            $sql = "SELECT PokemonID, Name FROM pokemon ORDER BY PokemonID";
             $result = $conn->query($sql);       //execute the query
-            $num_rows = mysqli_num_rows($result);
             if($result->num_rows >0){           //check if query results in more than 0 rows
                 while($row = $result->fetch_assoc()){   //loop until all rows in result are fetched
             ?>
             <script>
-                var a = '<?php echo $row["Name"];?>';
-                var b = <?php echo $row["Age"];?>;
-                var c = '<?php echo $row["StartingTown"];?>';
-                createTrainers(a, b, c);
+                var a = <?php echo $row["PokemonID"];?>;
+                var b = '<?php echo $row["Name"];?>';
+                createPokemon(a,b);
+            </script>
+            <?php
+                }
+            }
+            ?> 
+            
+            <?php             
+            $sql2 = "SELECT pID, HP, Attack, Defence, SpAtk, SpDef, Speed FROM stats ORDER BY pID";
+            $result2 = $conn->query($sql2);       //execute the query
+            if($conn->query($sql2)==TRUE){       //try executing the query 
+                }
+                else{
+                    echo "Query did not execute trainers<br>";
+                    echo("Error description:" . mysqli_errno($conn));
+                }
+            if($result2->num_rows >0){           //check if query results in more than 0 rows
+                while($row = $result2->fetch_assoc()){   //loop until all rows in result are fetched
+            ?>
+            <script>
+                var a = <?php echo $row["pID"];?>;
+                var b = <?php echo $row["HP"];?>;
+                var c = <?php echo $row["Attack"];?>;
+                var d = <?php echo $row["Defence"];?>;
+                var e = <?php echo $row["SpAtk"];?>;
+                var f = <?php echo $row["SpDef"];?>;
+                var g = <?php echo $row["Speed"];?>;
+                createStats(a,b,c,d,e,f,g);
             </script>
             <?php
                 }
             }
             ?>
+            
+            <?php             
+            $sql3 = "SELECT pID, Level, Move FROM moves ORDER BY pID";
+            $result3 = $conn->query($sql3);       //execute the query
+            if($result3->num_rows >0){           //check if query results in more than 0 rows
+                while($row = $result3->fetch_assoc()){   //loop until all rows in result are fetched
+            ?>
+            <script>
+                var a = <?php echo $row["pID"];?>;
+                var b = <?php echo $row["Level"];?>;
+                var c = '<?php echo $row["Move"];?>';
+                createMoves(a,b,c);
+            </script>
+            <?php
+                }
+            }
+            ?> 
         </div>
+
 
     </body>
 </html>
