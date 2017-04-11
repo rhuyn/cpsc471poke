@@ -55,27 +55,27 @@ and open the template in the editor.
                 </table>
             </div>
          </div>
-        <table id="npcEle" style="border: solid 1px white">
+        <table id="itemEle" style="border: solid 1px white">
             <tr>
                 <th style ="padding: 15px" align ="left">Name</th>
-                <th style ="padding: 15px" align ="left">Effect</th>
                 <th style ="padding: 15px" align ="left">Category</th>
+                <th style ="padding: 15px" align ="left">Effect</th>
                 <th style ="padding: 15px" align ="left">Given By</th>
                 <th style ="padding: 15px" align ="left">Found In</th>
             </tr>
             <?php             
-            $sql = "SELECT i.Name, i.Effect, i.Category, n.Title, n.Name,  FROM npcs WHERE NPCID > 0";
+            $sql = "SELECT i.iName, i.Effect, i.Category, n.Title, n.Name, f.MapName FROM items as i, npcs as n, itemmapfound as f WHERE i.NPCID = n.NPCID AND i.ItemID = f.ItemID";
             $result = $conn->query($sql);       //execute the query
             if($result->num_rows >0){           //check if query results in more than 0 rows
                 while($row = $result->fetch_assoc()){   //loop until all rows in result are fetched
             ?>
             <script>
-                var a = '<?php echo $row["Title"];?>';
-                var b = '<?php echo $row["Name"];?>';
-                var c = '<?php echo $row["Location"];?>';
-                var d = <?php echo $row["NumPokemon"];?>;
+                var a = '<?php echo $row["iName"];?>';
+                var b = '<?php echo $row["Effect"];?>';
+                var c = '<?php echo $row["Category"];?>';
+                var d = '<?php echo $row["Title"];?>' + " " + '<?php echo $row["Name"];?>';
                 var e = '<?php echo $row["MapName"];?>';
-                createNPC(a, b, c, d, e);
+                createItem(a, b, c, d, e);
             </script>
             <?php
                 }
