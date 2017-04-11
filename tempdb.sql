@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.17-log)
-# Date: 2017-04-10 22:26:29
+# Date: 2017-04-10 23:13:24
 # Generator: MySQL-Front 6.0  (Build 1.74)
 
 
@@ -109,7 +109,7 @@ CREATE TABLE `itemmapfound` (
 # Data for table "itemmapfound"
 #
 
-INSERT INTO `itemmapfound` VALUES (1,'Route 2'),(2,'Route 2'),(4,'Silph Co'),(1,'Route 2'),(2,'Route 2'),(3,'Unknown'),(4,'Silph Co');
+INSERT INTO `itemmapfound` VALUES (1,'Route 2'),(2,'Route 2'),(3,'Unknown'),(4,'Silph Co');
 
 #
 # Structure for table "trainer"
@@ -191,7 +191,7 @@ CREATE TABLE `ptypes` (
 # Data for table "ptypes"
 #
 
-INSERT INTO `ptypes` VALUES (1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A');
+INSERT INTO `ptypes` VALUES (1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A');
 
 #
 # Structure for table "canlearn"
@@ -251,4 +251,4 @@ CREATE TABLE `pmapfound` (
 # Data for table "pmapfound"
 #
 
-INSERT INTO `pmapfound` VALUES (1,'Pallet Town'),(10,'Route 2'),(1,'Pallet Town'),(10,'Route 2');
+INSERT INTO `pmapfound` VALUES (1,'Pallet Town'),(10,'Route 2');
