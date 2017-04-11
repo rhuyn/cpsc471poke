@@ -1,68 +1,7 @@
 ﻿# Host: localhost  (Version 5.7.17-log)
-# Date: 2017-03-30 18:45:13
+# Date: 2017-04-10 22:26:29
 # Generator: MySQL-Front 6.0  (Build 1.74)
 
-
-#
-# Structure for table "gym"
-#
-
-DROP TABLE IF EXISTS `gym`;
-CREATE TABLE `gym` (
-  `Name` varchar(255) DEFAULT NULL,
-  `Location` varchar(255) DEFAULT NULL,
-  `GymLeaderID` int(11) DEFAULT NULL,
-  UNIQUE KEY `Name` (`Name`),
-  KEY `Location` (`Location`),
-  KEY `GymLeaderID` (`GymLeaderID`),
-  CONSTRAINT `gym_ibfk_1` FOREIGN KEY (`Location`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `gym_ibfk_2` FOREIGN KEY (`GymLeaderID`) REFERENCES `npcs` (`NPCID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "gym"
-#
-
-INSERT INTO `gym` VALUES ('Pewter Gym','Pewter City',3),('Cerulean Gym','Cerulean City',8);
-
-#
-# Structure for table "maps"
-#
-
-DROP TABLE IF EXISTS `maps`;
-CREATE TABLE `maps` (
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "maps"
-#
-
-INSERT INTO `maps` VALUES (''),('Cerulean City'),('Pallet Town'),('Pewter City'),('Pokemon League'),('Route 1'),('Route 16'),('Route 2'),('Route 30'),('S.S. Anne'),('Saffron City'),('Silph Co'),('Unknown'),('Vermilion City'),('Viridian City');
-
-#
-# Structure for table "npcs"
-#
-
-DROP TABLE IF EXISTS `npcs`;
-CREATE TABLE `npcs` (
-  `NPCID` int(11) NOT NULL DEFAULT '0',
-  `Title` varchar(255) DEFAULT 'Uknown',
-  `Name` varchar(255) DEFAULT 'Unkown',
-  `Location` varchar(255) DEFAULT NULL,
-  `NumPokemon` int(11) DEFAULT NULL,
-  `MapName` varchar(255) NOT NULL DEFAULT 'Unknown',
-  PRIMARY KEY (`NPCID`),
-  KEY `NPCMap` (`MapName`),
-  CONSTRAINT `NPCMap` FOREIGN KEY (`MapName`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "npcs"
-#
-
-INSERT INTO `npcs` VALUES (0,'','','',0,'Unknown'),(1,'','','Pallet Town Research Lab',0,'Pallet Town'),(2,'','','Route 30',1,'Route 30'),(3,'','','Pewter Gym',2,'Pewter City'),(4,'','','Pokemon League',6,'Pokemon League'),(5,'','','Viridian City PokeMart',0,'Viridian City'),(6,'','','Cerulean City Bicycle Shop',0,'Cerulean City'),(7,'','','S.S. Anne',0,'Vermilion City'),(8,'','','Cerulean Gym',2,'Cerulean City'),(9,'','','Silph Co Building',0,'Saffron City');
 
 #
 # Structure for table "hmtm"
@@ -89,7 +28,46 @@ CREATE TABLE `hmtm` (
 # Data for table "hmtm"
 #
 
-INSERT INTO `hmtm` VALUES ('HM01','',30,'Allow User to cut trees outside of battle',50,'Normal',7,'S.S. Anne'),('HM02','',15,'Allow User to fly to any previously visited city outside of battle',90,'Flying',0,'Route 16'),('HM03','',15,'Allow user to traverse water terrains',90,'Water',0,'Unknown'),('TM22','',10,'',120,'Grass',0,'Unknown'),('TM25','',10,'',110,'Thunder',0,'Unknown');
+INSERT INTO `hmtm` VALUES ('HM01','None',30,'Allow User to cut trees outside of battle',50,'Normal',7,'S.S. Anne'),('HM02','None',15,'Allow User to fly to any previously visited city outside of battle',90,'Flying',0,'Route 16'),('HM03','None',15,'Allow user to traverse water terrains',90,'Water',0,'Unknown'),('TM22','None',10,'',120,'Grass',0,'Unknown'),('TM25','None',10,'',110,'Thunder',0,'Unknown');
+
+#
+# Structure for table "maps"
+#
+
+DROP TABLE IF EXISTS `maps`;
+CREATE TABLE `maps` (
+  `Name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "maps"
+#
+
+INSERT INTO `maps` VALUES ('Cerulean City'),('Pallet Town'),('Pewter City'),('Pokemon League'),('Route 1'),('Route 16'),('Route 2'),('Route 30'),('S.S. Anne'),('Saffron City'),('Silph Co'),('Unknown'),('Vermilion City'),('Viridian City');
+
+#
+# Structure for table "npcs"
+#
+
+DROP TABLE IF EXISTS `npcs`;
+CREATE TABLE `npcs` (
+  `NPCID` int(11) NOT NULL DEFAULT '0',
+  `Title` varchar(255) DEFAULT 'Uknown',
+  `Name` varchar(255) DEFAULT 'Unkown',
+  `Location` varchar(255) DEFAULT NULL,
+  `NumPokemon` int(11) DEFAULT NULL,
+  `MapName` varchar(255) NOT NULL DEFAULT 'Unknown',
+  PRIMARY KEY (`NPCID`),
+  KEY `NPCMap` (`MapName`),
+  CONSTRAINT `NPCMap` FOREIGN KEY (`MapName`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "npcs"
+#
+
+INSERT INTO `npcs` VALUES (0,'','','',0,'Unknown'),(1,'Professor','Oak','Pallet Town Research Lab',0,'Pallet Town'),(2,'Youngster','Joey','Route 30',1,'Route 30'),(3,'Gym Leader','Brock','Pewter Gym',2,'Pewter City'),(4,'Champion','Cynthia','Pokemon League',6,'Pokemon League'),(5,'PokeMart','Clerk','Viridian City PokeMart',0,'Viridian City'),(6,'Bicycle Shop','Clerk','Cerulean City Bicycle Shop',0,'Cerulean City'),(7,'Ship Captain','Bob','S.S. Anne',0,'Vermilion City'),(8,'Gym Leader','Misty','Cerulean Gym',2,'Cerulean City'),(9,'Silph Co','President','Silph Co Building',0,'Saffron City');
 
 #
 # Structure for table "items"
@@ -111,7 +89,7 @@ CREATE TABLE `items` (
 # Data for table "items"
 #
 
-INSERT INTO `items` VALUES (1,'','','Item',NULL),(2,'','','Medicine',5),(3,'','','Key Item',6),(4,'','','Item',9);
+INSERT INTO `items` VALUES (1,'Poke Ball','Allows the player to catch wild Pokemon','Item',5),(2,'Potion','Heals a Pokemon by 20 HP','Medicine',5),(3,'Bicycle','Allows for faster travel than walking or running. Can be used to ride on Cycling Roads','Key Item',6),(4,'Master Ball','A ball that captures any wild Pokemon without fail.','Item',9);
 
 #
 # Structure for table "itemmapfound"
@@ -131,7 +109,7 @@ CREATE TABLE `itemmapfound` (
 # Data for table "itemmapfound"
 #
 
-INSERT INTO `itemmapfound` VALUES (1,'Route 2'),(2,'Route 2'),(4,'Silph Co'),(1,'Route 2'),(2,'Route 2'),(4,'Silph Co');
+INSERT INTO `itemmapfound` VALUES (1,'Route 2'),(2,'Route 2'),(4,'Silph Co'),(1,'Route 2'),(2,'Route 2'),(3,'Unknown'),(4,'Silph Co');
 
 #
 # Structure for table "trainer"
@@ -213,7 +191,7 @@ CREATE TABLE `ptypes` (
 # Data for table "ptypes"
 #
 
-INSERT INTO `ptypes` VALUES (1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A');
+INSERT INTO `ptypes` VALUES (1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A'),(1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass','Poison'),(4,'Fire','N/A'),(5,'Fire','N/A'),(6,'Fire','Flying'),(7,'Water','N/A'),(8,'Water','N/A'),(9,'Water','N/A'),(10,'Bug','N/A');
 
 #
 # Structure for table "canlearn"
@@ -221,19 +199,19 @@ INSERT INTO `ptypes` VALUES (1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass'
 
 DROP TABLE IF EXISTS `canlearn`;
 CREATE TABLE `canlearn` (
-  `PokemonID` int(11) DEFAULT NULL,
-  `HMID` varchar(11) DEFAULT NULL,
-  KEY `CanLearnPID` (`PokemonID`),
-  KEY `LearnHM` (`HMID`),
-  CONSTRAINT `CanLearnPID` FOREIGN KEY (`PokemonID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `LearnHM` FOREIGN KEY (`HMID`) REFERENCES `hm_tm` (`IDName`) ON DELETE CASCADE ON UPDATE CASCADE
+  `PokemonID` int(11) NOT NULL DEFAULT '0',
+  `HMID` varchar(255) DEFAULT NULL,
+  UNIQUE KEY `PokemonID` (`PokemonID`),
+  KEY `HMID` (`HMID`),
+  CONSTRAINT `canlearn_ibfk_1` FOREIGN KEY (`PokemonID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `canlearn_ibfk_2` FOREIGN KEY (`HMID`) REFERENCES `hmtm` (`IDName`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "canlearn"
 #
 
-INSERT INTO `canlearn` VALUES (1,'HM01'),(2,'HM01'),(3,'HM01'),(7,'HM03'),(8,'HM03'),(9,'HM03'),(1,'HM01'),(2,'HM01'),(3,'HM01'),(7,'HM03'),(8,'HM03'),(9,'HM03');
+INSERT INTO `canlearn` VALUES (1,'HM01'),(2,'HM01'),(3,'HM01'),(7,'HM03'),(8,'HM03'),(9,'HM03');
 
 #
 # Structure for table "moves"
@@ -253,7 +231,7 @@ CREATE TABLE `moves` (
 # Data for table "moves"
 #
 
-INSERT INTO `moves` VALUES (1,1,'Tackle'),(1,3,'Growl'),(4,1,'Scratch'),(4,3,'Growl'),(7,1,'Tackle');
+INSERT INTO `moves` VALUES (1,1,'Tackle'),(1,3,'Growl'),(2,1,'Tackle'),(2,3,'Growl'),(3,1,'Tackle'),(3,3,'Growl'),(4,1,'Scratch'),(4,3,'Growl'),(5,1,'Scratch'),(5,3,'Growl'),(6,1,'Scratch'),(6,3,'Growl'),(7,1,'Tackle'),(7,3,'Tail Whip'),(8,1,'Tackle'),(8,3,'Tail Whip'),(9,1,'Tackle'),(9,3,'Tail Whip'),(10,1,'Tackle'),(10,3,'String Shot');
 
 #
 # Structure for table "pmapfound"
@@ -273,4 +251,4 @@ CREATE TABLE `pmapfound` (
 # Data for table "pmapfound"
 #
 
-INSERT INTO `pmapfound` VALUES (1,'Pallet Town'),(2,''),(10,'Route 2'),(1,'Pallet Town'),(2,''),(10,'Route 2'),(1,'Pallet Town'),(2,''),(10,'Route 2'),(1,'Pallet Town'),(2,''),(10,'Route 2'),(1,'Pallet Town'),(2,''),(10,'Route 2'),(1,'Pallet Town'),(2,''),(10,'Route 2');
+INSERT INTO `pmapfound` VALUES (1,'Pallet Town'),(10,'Route 2'),(1,'Pallet Town'),(10,'Route 2');

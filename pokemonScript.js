@@ -26,7 +26,7 @@ function createPokemon(pid, name)
     loc.appendChild(newDiv);
 }
 
-function createStats(pid, hp, attack, defence, spatk, spdef, speed)
+function createStats(pid, hp, attack, defence, spatk, spdef, speed, tone, ttwo)
 {
     var loc = document.getElementById("pokemon"+pid);
     
@@ -38,35 +38,40 @@ function createStats(pid, hp, attack, defence, spatk, spdef, speed)
     var oneRow = document.createElement("TR");
     var twoRow = document.createElement("TR");
     
-    var nameData1 = document.createElement("TD");
+    var nameData1 = document.createElement("TH");
     var nameVal1 = document.createTextNode("HP");
     nameData1.appendChild(nameVal1);
     oneRow.appendChild(nameData1);
     
-    var nameData2 = document.createElement("TD");
+    var nameData2 = document.createElement("TH");
     var nameVal2 = document.createTextNode("Attack");
     nameData2.appendChild(nameVal2);
     oneRow.appendChild(nameData2);
     
-    var nameData3 = document.createElement("TD");
+    var nameData3 = document.createElement("TH");
     var nameVal3 = document.createTextNode("Defence");
     nameData3.appendChild(nameVal3);
     oneRow.appendChild(nameData3);
     
-    var nameData4 = document.createElement("TD");
-    var nameVal4 = document.createTextNode("Special Attack");
+    var nameData4 = document.createElement("TH");
+    var nameVal4 = document.createTextNode("SAtk");
     nameData4.appendChild(nameVal4);
     oneRow.appendChild(nameData4);
     
-    var nameData5 = document.createElement("TD");
-    var nameVal5 = document.createTextNode("Special Defence");
+    var nameData5 = document.createElement("TH");
+    var nameVal5 = document.createTextNode("SDef");
     nameData5.appendChild(nameVal5);
     oneRow.appendChild(nameData5);
     
-    var nameData6 = document.createElement("TD");
+    var nameData6 = document.createElement("TH");
     var nameVal6 = document.createTextNode("Speed");
     nameData6.appendChild(nameVal6);
     oneRow.appendChild(nameData6);
+    
+    var nameData7 = document.createElement("TH");
+    var nameVal7 = document.createTextNode("Types");
+    nameData7.appendChild(nameVal7);
+    oneRow.appendChild(nameData7);
     
     var statData1 = document.createElement("TD");
     var statVal1 = document.createTextNode(hp);
@@ -97,6 +102,11 @@ function createStats(pid, hp, attack, defence, spatk, spdef, speed)
     var statVal6 = document.createTextNode(speed);
     statData6.appendChild(statVal6);
     twoRow.appendChild(statData6);
+    
+    var statData7 = document.createElement("TD");
+    var statVal7 = document.createTextNode(tone + " " + ttwo);
+    statData7.appendChild(statVal7);
+    twoRow.appendChild(statData7);
     
     newTable.appendChild(oneRow);
     newTable.appendChild(twoRow);

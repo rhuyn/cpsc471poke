@@ -78,14 +78,8 @@ and open the template in the editor.
             ?> 
             
             <?php             
-            $sql2 = "SELECT pID, HP, Attack, Defence, SpAtk, SpDef, Speed FROM stats ORDER BY pID";
-            $result2 = $conn->query($sql2);       //execute the query
-            if($conn->query($sql2)==TRUE){       //try executing the query 
-                }
-                else{
-                    echo "Query did not execute trainers<br>";
-                    echo("Error description:" . mysqli_errno($conn));
-                }
+            $sql2 = "SELECT s.pID, s.HP, s.Attack, s.Defence, s.SpAtk, s.SpDef, s.Speed, p.FirstType, p.SecondType FROM stats as s, ptypes as p WHERE s.pID = p.pID ORDER BY pID";
+            $result2 = $conn->query($sql2);       //execute the query     
             if($result2->num_rows >0){           //check if query results in more than 0 rows
                 while($row = $result2->fetch_assoc()){   //loop until all rows in result are fetched
             ?>
@@ -97,7 +91,9 @@ and open the template in the editor.
                 var e = <?php echo $row["SpAtk"];?>;
                 var f = <?php echo $row["SpDef"];?>;
                 var g = <?php echo $row["Speed"];?>;
-                createStats(a,b,c,d,e,f,g);
+                var h = '<?php echo $row["FirstType"];?>';
+                var i = '<?php echo $row["SecondType"];?>';
+                createStats(a,b,c,d,e,f,g,h,i);
             </script>
             <?php
                 }

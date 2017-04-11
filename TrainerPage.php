@@ -23,9 +23,6 @@ and open the template in the editor.
             //**********************************************************************
             $conn = new mysqli($servername, $username, $password, $db);
         ?>
-        <script>
-
-        </script>
         
         <div style="background-color: #EF1A35; padding: 2% 0.5% 0% 0.5%;">
             <a href = "MainPage.php">

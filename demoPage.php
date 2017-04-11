@@ -97,11 +97,11 @@ Manmeet Dhaliwal
             //**********************************************************************
             //Format: ID, BadgeReq, PP, Effect, Damage, Type, NPCID, MapName
             $machineArr = array(
-                array("HM01", NULL, 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, "S.S. Anne"),
-                array("HM02", NULL, 15, "Allow User to fly to any previously visited city outside of battle", 90, "Flying", 0, "Route 16"),
-                array("HM03", NULL, 15, "Allow user to traverse water terrains", 90, "Water", 0, "Unknown"),
-                array("TM22", NULL, 10, NULL, 120, "Grass", 0, "Unknown"),
-                array("TM25", NULL, 10, NULL, 110, "Thunder", 0, "Unknown")
+                array("HM01", "None", 30, "Allow User to cut trees outside of battle", 50, "Normal", 7, "S.S. Anne"),
+                array("HM02", "None", 15, "Allow User to fly to any previously visited city outside of battle", 90, "Flying", 0, "Route 16"),
+                array("HM03", "None", 15, "Allow user to traverse water terrains", 90, "Water", 0, "Unknown"),
+                array("TM22", "None", 10, NULL, 120, "Grass", 0, "Unknown"),
+                array("TM25", "None", 10, NULL, 110, "Thunder", 0, "Unknown")
             );
             //**********************************************************************
             
@@ -133,6 +133,7 @@ Manmeet Dhaliwal
             $itemmapArr = array(
                 array(1, "Route 2"),
                 array(2, "Route 2"),
+                array(3, "Unknown"),
                 array(4, "Silph Co")
             );
             //**********************************************************************

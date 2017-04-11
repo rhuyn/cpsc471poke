@@ -12,6 +12,17 @@ and open the template in the editor.
         <script src="ItemScript.js"></script>
     </head>
 <body Style="background-image: url('pokeballBK.png'); opacity: 30%;">
+        <?php
+            
+            //Server Info
+            //**********************************************************************
+            $servername = "localhost";          //should be same for you
+            $username = "root";                 //same here
+            $password = "abcd1234";             //your localhost root password
+            $db = "tempdb";                     //your database name
+            //**********************************************************************
+            $conn = new mysqli($servername, $username, $password, $db);
+        ?>
         <div style="background-color: #EF1A35; padding: 2% 0.5% 0% 0.5%;">
             <a href = "MainPage.php">
                 <img src="pokemonLogo.png" width="20%" alt="" />
@@ -44,5 +55,32 @@ and open the template in the editor.
                 </table>
             </div>
          </div>
+        <table id="npcEle" style="border: solid 1px white">
+            <tr>
+                <th style ="padding: 15px" align ="left">Name</th>
+                <th style ="padding: 15px" align ="left">Effect</th>
+                <th style ="padding: 15px" align ="left">Category</th>
+                <th style ="padding: 15px" align ="left">Given By</th>
+                <th style ="padding: 15px" align ="left">Found In</th>
+            </tr>
+            <?php             
+            $sql = "SELECT i.Name, i.Effect, i.Category, n.Title, n.Name,  FROM npcs WHERE NPCID > 0";
+            $result = $conn->query($sql);       //execute the query
+            if($result->num_rows >0){           //check if query results in more than 0 rows
+                while($row = $result->fetch_assoc()){   //loop until all rows in result are fetched
+            ?>
+            <script>
+                var a = '<?php echo $row["Title"];?>';
+                var b = '<?php echo $row["Name"];?>';
+                var c = '<?php echo $row["Location"];?>';
+                var d = <?php echo $row["NumPokemon"];?>;
+                var e = '<?php echo $row["MapName"];?>';
+                createNPC(a, b, c, d, e);
+            </script>
+            <?php
+                }
+            }
+            ?>
+        </table>
     </body>
 </html>
