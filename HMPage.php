@@ -11,7 +11,7 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="generalStyle.css">
         <script src="HMScript.js"></script>
     </head>
-<body Style="background-image: url('pokeballBK.png'); opacity: 30%;">
+<body Style="background-image: url('pokeballBK.png'); opacity: 30%; background-repeat: no-repeat; background-size: cover">
         <?php
             
             //Server Info

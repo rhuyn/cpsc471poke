@@ -12,7 +12,7 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="pokemonStyle.css"/>
         <script src="pokemonScript.js"></script>
     </head>
-    <body Style="background-image: url('pokeballBK.png'); opacity: 30%;">
+    <body Style="background-image: url('pokeballBK.png'); opacity: 30%; background-repeat: no-repeat; background-size: cover">
         <?php
             
             //Server Info

@@ -15,8 +15,8 @@ CREATE TABLE `hmtm` (
   `Effect` varchar(255) DEFAULT NULL,
   `Damage` int(11) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
-  `NPCID` int(11) DEFAULT NULL,
-  `MapFound` varchar(255) DEFAULT NULL,
+  `NPCID` int(11) NOT NULL DEFAULT '0',
+  `MapFound` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`IDName`),
   KEY `MapFound` (`MapFound`),
   KEY `NPCID` (`NPCID`),
@@ -45,6 +45,28 @@ CREATE TABLE `maps` (
 #
 
 INSERT INTO `maps` VALUES ('Cerulean City'),('Pallet Town'),('Pewter City'),('Pokemon League'),('Route 1'),('Route 16'),('Route 2'),('Route 30'),('S.S. Anne'),('Saffron City'),('Silph Co'),('Unknown'),('Vermilion City'),('Viridian City');
+
+#
+# Structure for table "gyms"
+#
+
+DROP TABLE IF EXISTS `gyms`;
+CREATE TABLE `gyms` (
+  `Name` varchar(255) NOT NULL DEFAULT '',
+  `Location` varchar(255) NOT NULL DEFAULT '',
+  `GymLeaderID` int(11) NOT NULL DEFAULT '',
+  KEY (`Name`),
+  KEY (`Location`),
+  PRIMARY KEY (`GymLeaderID`),
+  CONSTRAINT `gyms_ibfk_2` FOREIGN KEY (`Location`) REFERENCES `maps` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `gyms_ibfk_1` FOREIGN KEY (`NPCID`) REFERENCES `npcs` (`NPCID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "gyms"
+#
+
+INSERT INTO `gyms` VALUES ("Pewter Gym", "Pewter City", 3),("Cerulean Gym", "Cerulean City", 8);
 
 #
 # Structure for table "npcs"
@@ -200,7 +222,7 @@ INSERT INTO `ptypes` VALUES (1,'Grass','Poison'),(2,'Grass','Poison'),(3,'Grass'
 DROP TABLE IF EXISTS `canlearn`;
 CREATE TABLE `canlearn` (
   `PokemonID` int(11) NOT NULL DEFAULT '0',
-  `HMID` varchar(255) DEFAULT NULL,
+  `HMID` varchar(255) NOT NULL DEFAULT '',
   UNIQUE KEY `PokemonID` (`PokemonID`),
   KEY `HMID` (`HMID`),
   CONSTRAINT `canlearn_ibfk_1` FOREIGN KEY (`PokemonID`) REFERENCES `pokemon` (`PokemonID`) ON DELETE CASCADE ON UPDATE CASCADE,

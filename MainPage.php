@@ -9,7 +9,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
     </head>
-    <body Style="background-image: url('pokeballBK.png'); opacity: 30%;">
+    <body Style="background-image: url('pokeballBK.png'); opacity: 30%; background-repeat: no-repeat; background-size: cover">
         <div style="background-color: #EF1A35; padding: 2% 0.5% 0% 0.5%;">
             <a href = "MainPage.php">
                 <img src="pokemonLogo.png" width="20%" alt="" />

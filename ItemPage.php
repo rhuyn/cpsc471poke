@@ -11,7 +11,7 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="generalStyle.css">
         <script src="ItemScript.js"></script>
     </head>
-<body Style="background-image: url('pokeballBK.png'); opacity: 30%;">
+<body Style="background-image: url('pokeballBK.png'); opacity: 30%; background-repeat: no-repeat; background-size: cover">
         <?php
             
             //Server Info
@@ -68,6 +68,7 @@ and open the template in the editor.
             $result = $conn->query($sql);       //execute the query
             if($result->num_rows >0){           //check if query results in more than 0 rows
                 while($row = $result->fetch_assoc()){   //loop until all rows in result are fetched
+           
             ?>
             <script>
                 var a = '<?php echo $row["iName"];?>';
